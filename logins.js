@@ -24,7 +24,18 @@ module.exports = {
             if (err) {
                 return callback(err, null);
             }
-            data = JSON.parse(body);
+            
+            if (body.trim().indexOf('<') === 0) {
+                // the response is html but should be json, exit here with error
+                // this usually happens on server-/login-error
+                return callback(new Error('Error: CAS is Unavailable! There was an error trying to complete your request. Please notify your support desk or try again.'), null);
+            }
+            
+            try {
+                data = JSON.parse(body);
+            } catch(err) {
+                return callback(err, null);
+            }
 
             options = {
                 url: login_url,
@@ -77,6 +88,7 @@ module.exports = {
                     }
 
                     token = body.split('token=')[1];
+                    if(!token) return callback(new Error('Login failed'), null);
                     token = token.split('&')[0];
 
                     if (!token) {
