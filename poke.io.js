@@ -550,7 +550,7 @@ function Pokeio() {
       geocoder.geocode(locationName, function (err, data) {
         if (err || data.status === 'ZERO_RESULTS') {
           return callback(new Error('location not found'));
-        } else if (!!data.results) {
+        } else if (!data.results) {
           return callback(new Error('results is undefined'));
         } else if (data.results.length == 0) {
           return callback(new Error('results.length is zero'));
