@@ -13,7 +13,8 @@
     "protobufjs": "^5.0.1",
     "request": "^2.73.0",
     "simple-s2-node": "git+https://github.com/billyriantono/simple-s2-node.git",
-    "tape": "^4.6.0"
+    "tape": "^4.6.0",
+    "bytebuffer": "latest"
   },
   "scripts": {
     "test": "istanbul cover node_modules/tape/bin/tape tests/**/*.js"
