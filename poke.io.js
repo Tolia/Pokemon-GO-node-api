@@ -389,13 +389,7 @@ function Pokeio() {
             self.playerInfo.longitude = location.coords.longitude || self.playerInfo.longitude;
             self.playerInfo.altitude = location.coords.altitude || self.playerInfo.altitude;
 
-            geocoder.reverseGeocode.apply(geocoder, _toConsumableArray(GetCoords(self)).concat([function (err, data) {
-                if (data.status !== 'ZERO_RESULTS') {
-                    self.playerInfo.locationName = data.results[0].formatted_address;
-                }
-
-                callback(null, self.GetLocationCoords());
-            }]));
+            callback(null, self.GetLocationCoords());
         }
     };
 }
