@@ -12,6 +12,7 @@ var fs = require('fs');
 var s2 = require('simple-s2-node');
 var LatLng = new s2.S2LatLng();
 var CellId = new s2.S2CellId();
+var Agent = require('socks5-https-client/lib/Agent');
 
 var Logins = require('./logins');
 
@@ -75,7 +76,8 @@ function Pokeio() {
         altitude: 0,
         locationName: '',
         provider: '',
-        apiEndpoint: ''
+        apiEndpoint: '',
+        proxyOptions: null
     };
 
     self.DebugPrint = function (str) {
@@ -115,7 +117,10 @@ function Pokeio() {
             headers: {
                 'User-Agent': 'Niantic App'
             },
-            timeout: 3000
+            timeout: 3000,
+            strictSSL: true,
+            agentClass: Agent,
+            agentOptions: this.playerInfo.proxyOptions
         };
 
         self.request.post(options, function (err, response, body) {
