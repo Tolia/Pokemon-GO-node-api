@@ -117,7 +117,7 @@ function Pokeio() {
             headers: {
                 'User-Agent': 'Niantic App'
             },
-            timeout: 3000,
+            timeout: 5000,
             strictSSL: true,
             agentClass: Agent,
             agentOptions: self.playerInfo.proxyOptions
@@ -126,7 +126,7 @@ function Pokeio() {
         self.request.post(options, function (err, response, body) {
             if (response === undefined || body === undefined) {
                 console.error('[!] RPC Server offline');
-                return callback(new Error('RPC Server offline'));
+                return callback(new Error(`RPC Server offline: ${response.statusCode}`));
             }
 
             try {
