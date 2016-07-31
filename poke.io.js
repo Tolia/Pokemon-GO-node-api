@@ -61,7 +61,7 @@ function Pokeio() {
     var self = this;
     self.events = new EventEmitter();
     self.j = request.jar();
-    self.request = request.defaults({ jar: self.j, timeout: 5000 });
+    self.request = request.defaults({ jar: self.j });
 
     self.google = new GoogleOAuth();
 
@@ -114,7 +114,8 @@ function Pokeio() {
             encoding: null,
             headers: {
                 'User-Agent': 'Niantic App'
-            }
+            },
+            timeout: 3000
         };
 
         self.request.post(options, function (err, response, body) {
