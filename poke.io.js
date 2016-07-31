@@ -61,7 +61,7 @@ function Pokeio() {
     var self = this;
     self.events = new EventEmitter();
     self.j = request.jar();
-    self.request = request.defaults({ jar: self.j });
+    self.request = request.defaults({ jar: self.j, timeout: 5000 });
 
     self.google = new GoogleOAuth();
 
