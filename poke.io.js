@@ -120,7 +120,7 @@ function Pokeio() {
             timeout: 3000,
             strictSSL: true,
             agentClass: Agent,
-            agentOptions: this.playerInfo.proxyOptions
+            agentOptions: self.playerInfo.proxyOptions
         };
 
         self.request.post(options, function (err, response, body) {
