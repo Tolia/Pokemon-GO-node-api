@@ -126,7 +126,7 @@ function Pokeio() {
         self.request.post(options, function (err, response, body) {
             if (response === undefined || body === undefined) {
                 console.error('[!] RPC Server offline');
-                return callback(new Error(`RPC Server offline: ${response.statusCode}`));
+                return callback(new Error(`RPC Server offline: ${response && response.statusCode} ${body}`));
             }
 
             try {
