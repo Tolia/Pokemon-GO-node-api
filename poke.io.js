@@ -247,39 +247,39 @@ function Pokeio() {
         var apiEndpoint = _self$playerInfo2.apiEndpoint;
         var accessToken = _self$playerInfo2.accessToken;
 
-
-        var nullbytes = new Buffer(21);
+        var nullbytes = new Array(21);
         nullbytes.fill(0);
 
         // Generating walk data using s2 geometry
         var walk = getNeighbors(self.playerInfo.latitude, self.playerInfo.longitude).sort(function (a, b) {
-            return a > b;
-        });
-        var buffer = new ByteBuffer(21 * 10).LE();
-        walk.forEach(function (elem) {
-            buffer.writeVarint64(elem);
+          return a > b;
         });
 
         // Creating MessageQuad for Requests type=106
-        buffer.flip();
         var walkData = new RequestEnvelop.MessageQuad({
-            'f1': buffer.toBuffer(),
-            'f2': nullbytes,
-            'lat': self.playerInfo.latitude,
-            'long': self.playerInfo.longitude
+          'f1': walk,
+          'f2': nullbytes,
+          'lat': self.playerInfo.latitude,
+          'long': self.playerInfo.longitude
         });
 
         var req = [new RequestEnvelop.Requests(106, walkData.encode().toBuffer()), new RequestEnvelop.Requests(126), new RequestEnvelop.Requests(4, new RequestEnvelop.Unknown3(Date.now().toString()).encode().toBuffer()), new RequestEnvelop.Requests(129), new RequestEnvelop.Requests(5, new RequestEnvelop.Unknown3('05daf51635c82611d1aac95c0b051d3ec088a930').encode().toBuffer())];
 
         api_req(apiEndpoint, accessToken, req, function (err, f_ret) {
-            if (err) {
-                return callback(err);
-            } else if (!f_ret || !f_ret.payload || !f_ret.payload[0]) {
-                return callback('No result');
-            }
+          if (err) {
+            return callback(err);
+          } else if (!f_ret || !f_ret.payload || !f_ret.payload[0]) {
+            return callback('No result');
+          }
 
-            var heartbeat = ResponseEnvelop.HeartbeatPayload.decode(f_ret.payload[0]);
-            callback(null, heartbeat);
+          var dErr, heartbeat;
+          try {
+            heartbeat = ResponseEnvelop.HeartbeatPayload.decode(f_ret.payload[0]);
+          } catch (err) {
+            dErr = err;
+          }
+          callback(dErr, heartbeat);
+
         });
     };
 
