@@ -206,7 +206,7 @@ function Pokeio() {
 
       self.request.post(options, function (err, response, body) {
         if (err) {
-          return callback(new Error('Error'));
+          return callback(err);
         }
 
         if (response === undefined || body === undefined) {
