@@ -36,6 +36,7 @@ var RequestEnvelop = pokemonProto.RequestEnvelop;
 var ResponseEnvelop = pokemonProto.ResponseEnvelop;
 var Signature = pokemonProto.Signature;
 var pokemonlist = JSON.parse(fs.readFileSync(__dirname + '/pokemons.json', 'utf8'));
+var itemlist = JSON.parse(fs.readFileSync(__dirname + '/items.json', 'utf8'));
 
 var EventEmitter = events.EventEmitter;
 
@@ -77,6 +78,7 @@ function Pokeio() {
   self.google = new GoogleOAuth();
 
   self.pokemonlist = pokemonlist.pokemon;
+  self.itemlist = itemlist.items
 
   self.playerInfo = {
     accessToken: '',
@@ -339,8 +341,7 @@ function Pokeio() {
 
       callback(dErr, response);
 
-      if (response)
-      if (response.username) {
+      if (response && response.username) {
         self.DebugPrint('[i] Logged in!');
       }
 
