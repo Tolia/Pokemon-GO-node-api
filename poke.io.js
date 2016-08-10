@@ -198,8 +198,8 @@ function Pokeio() {
         headers: {
           'User-Agent': 'Niantic App'
         },
-        timeout: 5000,
-        strictSSL: true,
+        timeout: 9000,
+        strictSSL: false,
         agentClass: Agent,
         agentOptions: self.playerInfo.proxyOptions
       };
